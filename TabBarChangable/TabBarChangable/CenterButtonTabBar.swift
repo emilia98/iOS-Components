@@ -16,7 +16,7 @@ extension CGFloat {
 class CenterButtonTabBar: UITabBar {
     private(set) var centerButton = UIButton(type: .system)
     weak var tabBarController: CustomTabBarController?
-    private let image = UIImage(named: "plus-icon")
+    private let image = UIImage(named: "plus-icon")?.withRenderingMode(.alwaysTemplate)
     private var imageView: UIImageView!
     
     override func awakeFromNib() {
@@ -51,7 +51,7 @@ class CenterButtonTabBar: UITabBar {
         let side = CGFloat(80)
         centerButton.frame.size = CGSize(width: side, height: side)
         centerButton.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: 10)
-        centerButton.tintColor = .white
+        // centerButton.tintColor = .white
         centerButton.backgroundColor = .blue
         centerButton.layer.masksToBounds = true
         centerButton.layer.cornerRadius = side / 2
@@ -61,6 +61,7 @@ class CenterButtonTabBar: UITabBar {
         
         
         imageView = UIImageView(image: image)
+        imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFit
         
         centerButton.addTarget(self, action: #selector(openScanning), for: .touchUpInside)
@@ -84,11 +85,11 @@ class CenterButtonTabBar: UITabBar {
     private func switchVCs() {
         let isClosed = tabBarController!.isClosed
         UIView.animate(withDuration: 0.5) { [self] in
-            imageView.tintColor = isClosed ? UIColor.red : UIColor.yellow
+            imageView.tintColor = isClosed ? .blue : .white
+            centerButton.backgroundColor = isClosed ? .white : .blue
             imageView.transform = isClosed ? CGAffineTransform(rotationAngle: CGFloat(45).inRadians()) : .identity
         } completion: { [self] isFinished in
             tabBarController!.isClosed.toggle()
         }
     }
-
 }

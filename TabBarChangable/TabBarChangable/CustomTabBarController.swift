@@ -12,7 +12,7 @@ class CustomTabBarController: UITabBarController {
     private var secondViewControllers = [UIViewController]()
     private let storyboardRef = UIStoryboard(name: "Main", bundle: nil)
     public var isClosed = true
-    private var lastSelected: UIViewController?
+    private(set) var lastSelected: UIViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,6 @@ class CustomTabBarController: UITabBarController {
     
     func instantiateSecondGroup() {
         lastSelected = self.selectedViewController
-        
         self.viewControllers?.removeAll()
         for vc in secondViewControllers {
             self.viewControllers?.append(vc)
